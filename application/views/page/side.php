@@ -44,7 +44,20 @@
 
         <?php } else {
           ?>
-          
+            <li><a href="app"><i class="fa fa-dashboard"></i> <span>Dashboard</span></a></li>
+        <li><a href="konsumen"><i class="fa fa-user-plus"></i> <span>Data Konsumen</span></a></li>
+        <li><a href="minat"><i class="fa fa-phone"></i> <span>Data Minat</span></a></li>
+        <li><a href="penjualan"><i class="fa fa-shopping-cart"></i> <span>Data Penjualan</span></a></li>
+        <li><a href="slider"><i class="fa fa-image"></i> <span>Data Slider</span></a></li>
+        <li><a href="Series"><i class="fa fa-circle-o"></i> Series</a></li>
+        <li><a href="Type"><i class="fa fa-circle-o"></i> Type</a></li>
+        <li><a href="Warna"><i class="fa fa-circle-o"></i> Warna</a></li>
+        <li><a href="Mobil"><i class="fa fa-circle-o"></i> Mobil</a></li>
+        <li><a href="hubungi_kami"><i class="fa fa-envelope"></i> <span>Hubungi Kami</span></a></li>
+        
+      
+        <li><a href="a_user"><i class="fa fa-users"></i> <span>Manajemen User</span></a></li>
+        <li><a href="Laporan"><i class="fa fa-bar-chart"></i> <span>Laporan Penjualan</span></a></li>
           <?php
         } ?>
         <!-- <li class="header">LABELS</li>
