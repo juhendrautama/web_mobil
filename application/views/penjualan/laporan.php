@@ -3,19 +3,52 @@
         <tr>
         <td><label>Tanggal</label> </td>
         <td>:</td>
-        <?php if (isset($_POST['proses'])){ ?>
+<?php if (isset($_POST['proses'])){ ?>
         <td><input type="date" class="form-control" name="tgl1" id="tgl1" value="<?php echo $_POST['tgl1'] ?>"></td>
         <td >&nbsp; <b>-</b>&nbsp; </td>
         <td><input type="date" class="form-control" name="tgl2" id="tgl2" value="<?php echo $_POST['tgl2'] ?>"></td>
-        <?php }else if (isset($_POST['Grafik'])){ ?>
+        <td >&nbsp; <b></b>&nbsp; </td>
+        <td>
+            <select name="user_at" class="form-control">
+             <?php if($_POST['user_at']=='all'){ ?>
+
+                <option value="all">semua</option> 
+                <?php  foreach ($tampil_data_user_op->result()as $row){?>
+                    <option value="<?php echo $row->id_user; ?>"><?php echo $row->nama_lengkap; ?></option>
+                <?php } ?>
+
+             <?php }else{ ?>   
+
+                <?php $id_user=$_POST['user_at']; ?>
+                <?php $data_user=$this->Penjualan_model->Tampil_data_user($id_user); ?>
+                    <option value="<?php echo $_POST['user_at']; ?>"><?php echo $data_user->nama_lengkap; ?></option>
+                    <?php  foreach ($tampil_data_user_op->result()as $row){?>
+                        <option value="<?php echo $row->id_user; ?>"><?php echo $row->nama_lengkap; ?></option>
+                    <?php } ?>  
+                    <option value="all">semua</option>  
+
+            <?php } ?>     
+            </select>
+        </td> 
+<?php }else if (isset($_POST['Grafik'])){ ?>
         <td><input type="date" class="form-control" name="tgl1" id="tgl1" value="<?php echo $_POST['tgl1'] ?>"></td>
         <td >&nbsp; <b>-</b>&nbsp; </td>
         <td><input type="date" class="form-control" name="tgl2" id="tgl2" value="<?php echo $_POST['tgl2'] ?>"></td>
-        <?php }else{ ?>
+<?php }else{ ?> 
         <td><input type="date" class="form-control" name="tgl1" id="tgl1" value=""></td>
         <td >&nbsp; <b>-</b>&nbsp; </td>
         <td><input type="date" class="form-control" name="tgl2" id="tgl2" value=""></td> 
-        <?php } ?>   
+        <td >&nbsp; <b></b>&nbsp; </td>
+        <td>
+            <select name="user_at" class="form-control">
+                <option value="">Pillih Sales</option>
+                <?php  foreach ($tampil_data_user_op->result()as $row){?>
+                    <option value="<?php echo $row->id_user; ?>"><?php echo $row->nama_lengkap; ?></option>
+                <?php } ?>  
+                <option value="all">semua</option>   
+            </select>
+        </td> 
+<?php } ?>   
         <td> &nbsp;</td>
         <td><input type="submit" class="btn btn-primary btn-sm" name="proses" value="Go Tampil"></td>
         <td> &nbsp;</td>
@@ -37,13 +70,12 @@
             <th>Tanggal</th>
             <th>Nama Konsumen</th>
             <th>Tipe Pembayaran</th>
-            <th>Mobil</th>
-            <th>Harga</th>
-            <th>Created At</th>
             <th>User At</th>
+            <th>Unit</th>
+            <th>Harga</th>
         </tr>
         
-        <?php $no=1; foreach ($tampil_data_penjualan_lap->result()as $penjualan){?>
+        <?php $no=1; $tot_harga=0; $tot_unit=0; foreach ($tampil_data_penjualan_lap->result()as $penjualan){?>
         <tr>
 			<td width="80px"><?php echo $no; ?></td>
 			<td><?php echo $penjualan->kode_transaksi; ?></td>
@@ -58,25 +90,36 @@
 			<td><?php echo $penjualan->tipe_pembayaran; ?></td>
             <td>
             <?php
-                    $id_mobil=$penjualan->id_mobil;
-                    $data_mobil=$this->Penjualan_model->Tampil_data_mobil($id_mobil);
-                    echo $data_mobil->judul;
-                ?>
-            </td>
-			<td>
-            Rp. <?php echo number_format($data_mobil->harga) ?>
-            </td>
-			<td><?php echo $penjualan->created_at; ?></td>
-			<td>
-            <?php
                     $id_user=$penjualan->user_at;
                     $data_user=$this->Penjualan_model->Tampil_data_user($id_user);
                     echo $data_user->nama_lengkap;
                 ?>
             </td>
+            <td>
+            <?php
+                    $id_mobil=$penjualan->id_mobil;
+                    $data_mobil=$this->Penjualan_model->Tampil_data_mobil($id_mobil);
+                    echo $data_mobil->judul;
+                    
+                ?>
+                <?php $unit=1; ?>
+            </td>
+			<td>
+            Rp. <?php 
+              $harga=$data_mobil->harga; 
+            echo number_format($data_mobil->harga); 
+            ?>
+            </td>
+            <?php $tot_harga=$tot_harga+$harga; ?>
+            <?php $tot_unit=$tot_unit+$unit; ?>
+			
 		</tr>
         <?php $no++; } ?>
-        
+        <tr>
+            <td colspan="6">TOTAL</td>
+            <td><?php echo $tot_unit; ?></td>
+            <td>Rp.<?php echo number_format($tot_harga); ?></td>
+        </tr>
           
        
         </table>    

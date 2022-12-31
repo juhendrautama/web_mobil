@@ -14,6 +14,12 @@ class Penjualan_model extends CI_Model
     {
         parent::__construct();
     }
+
+    function Tampil_data_user_op(){
+        $sql=$this->db->query("SELECT * FROM `a_user` WHERE `level` = 'operator' ");
+        return $sql;
+    }
+
     function Stok_lama($id_mobil){
         $sql=$this->db->query("SELECT stok_awal,stok_keluar FROM `mobil` WHERE `id_mobil` = $id_mobil ");
         return $sql->row();
@@ -29,13 +35,24 @@ class Penjualan_model extends CI_Model
     function tampil_data_penjualan_lap(){
        $tgl1=$this->input->post('tgl1');
        $tgl2=$this->input->post('tgl2');
-      $sql=$this->db->query("select * FROM penjualan WHERE tanggal BETWEEN '$tgl1' AND '$tgl2'");
+       $user_at=$this->input->post('user_at');
+       if($user_at=='all'){
+        $sql=$this->db->query("select * FROM penjualan WHERE tanggal BETWEEN '$tgl1' AND '$tgl2'");
+       }else{
+        $sql=$this->db->query("select * FROM penjualan WHERE user_at='$user_at' AND tanggal BETWEEN '$tgl1' AND '$tgl2'");
+       }
+
         return $sql;
     }
     function cetak_data_penjualan_lap(){
         $tgl1=$this->input->post('tgl1');
         $tgl2=$this->input->post('tgl2');
-        $sql=$this->db->query("select * FROM penjualan WHERE tanggal BETWEEN '$tgl1' AND '$tgl2'");
+        $user_at=$this->input->post('user_at');
+        if($user_at=='all'){
+         $sql=$this->db->query("select * FROM penjualan WHERE tanggal BETWEEN '$tgl1' AND '$tgl2'");
+        }else{
+         $sql=$this->db->query("select * FROM penjualan WHERE user_at='$user_at' AND tanggal BETWEEN '$tgl1' AND '$tgl2'");
+        }
         return $sql;
     }
 

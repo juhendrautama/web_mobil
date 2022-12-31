@@ -19,6 +19,7 @@ class Laporan extends CI_Controller
                 'judul_page' => 'Laporan Penjualan',
                 'konten' => 'penjualan/laporan'
             );
+            $data['tampil_data_user_op']=$this->Penjualan_model->Tampil_data_user_op();
             $data['tampil_data_penjualan_lap']=$this->Penjualan_model->tampil_data_penjualan_lap();
             $this->load->view('v_index', $data);
         }else if (isset($_POST['cetak'])) {
@@ -30,6 +31,7 @@ class Laporan extends CI_Controller
                 'konten' => 'penjualan/laporan',
             'tanggal' => date('Y-m-d'),
             );
+            $data['tampil_data_user_op']=$this->Penjualan_model->Tampil_data_user_op();
             $this->load->view('v_index', $data);
         }    
     }
